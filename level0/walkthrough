@@ -1,0 +1,4 @@
+1) the program check if the input is 0x1a7 (423) to grant access to a shell
+2) so, we enter 423 in the input of the program
+3) because the program is setuid by level1 we get a shell with the level1 user rights
+4) we can now navigate to the level1 home directory and open the .pass file
