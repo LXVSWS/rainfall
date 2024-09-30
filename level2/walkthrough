@@ -1,0 +1,2 @@
+1) the program create a buffer of 76 bytes on the stack then put an input from the user inside it
+2) because there is no size limit for the input, we can exploit this program with a buffer overflow, but there is a restriction that prevent us to put any address from the stack into EIP
