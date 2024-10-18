@@ -9,9 +9,9 @@ int n()
   char s[520];
 
   fgets(s, 512, stdin);
-  p(s);
+  printf(s);
   result = m;
-  if ( m == 16930116 ) // 0x1025544
+  if ( m == 0x01025544 ) // 16930116
     return system("/bin/cat /home/user/level5/.pass");
   return result;
 }

