@@ -1,2 +1,2 @@
 heap overflow
-we overflow at 21 bytes AAAAAAAAAAAAAAAAAAAAA B
+we see we override EAX and EDX with $(echo -ne 'BBBBBBBBBBBBBBBBBBBB\x41\x41\x41\x41')
