@@ -1,2 +1,4 @@
+set disassembly-flavor intel
 heap overflow
-we see we override EAX and EDX with $(echo -ne 'BBBBBBBBBBBBBBBBBBBB\x41\x41\x41\x41')
+we see we override of EDX with $(echo -ne 'BBBBBBBBBBBBBBBBBBBB\x41\x41\x41\x41')
+we can check the state of the heap with info proc mappings in gdb then x/64x HEAP_ADDRESS
