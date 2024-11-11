@@ -1,4 +1,3 @@
-set disassembly-flavor intel
 we want to overwrite the puts call with the m function using a heap overflow
 we see we override EAX and EDX with $(python -c 'print "AAAAAAAAAAAAAAAAAAAA" + "\x28\x99\x04\x08"')
 we can check the state of the heap with info proc mappings in gdb then x/64x HEAP_ADDRESS
