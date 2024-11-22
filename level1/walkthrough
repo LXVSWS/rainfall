@@ -1,7 +1,8 @@
-the program create a buffer of 76 bytes on the stack then put an input from the user inside it, we also see a "run" function that launches a system command with a shell
+the program create a buffer on the stack then put an input from the user inside it, we also see a "run" function that launches a system command with a shell
 because there is no size limit for the input, we can exploit this program with a buffer overflow, and put the address of the "run" function into the EIP register to execute it
 we type in gdb "info address run" to get the address of the "run" function
 we get 0x08048444 but we have to reverse it to conform to the little endian bytes order of x86 processors and send it as a shell escaped sequence of hexadecimal values
+we use a overflow exploit pattern generator to confirm that the overflow is indeed 76 bytes
 so the exploit input is 76 bytes of random data then the "run" address in little endian order escaped sequence, we send that with "python -c" to enable interpretation of backslash escapes and inside parentheses so we can group commands, because we have to add a cat command so the shell obtained stays open :
 (python -c 'print "A" * 76 + "\x44\x84\x04\x08"' ; cat) | ./level1
 because the executable is setuid by level2, when we get the shell we can navigate to level2 home and open the .pass file
