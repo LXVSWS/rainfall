@@ -13,16 +13,4 @@ auth AAAAAAAAAAA
 
 service BBBBBBBBB
 
-logi
-
-
-As we can see on the source code , we has a system call for /bin/sh in the login section.
-For that we need to overwrite the auth variable to point to the service variable.
-as long as we can see the auth wariable is a pointer to a 4 byte memory space and there is no check on it.
-
-
-auth AAAAAAAAAAA
-
-service BBBBBBBBB
-
 login
