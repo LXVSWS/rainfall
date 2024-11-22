@@ -1,12 +1,7 @@
-1) the program create a buffer of 76 bytes on the stack then put an input from the user inside it, we also see a "run" function that launches a system command with a shell
-2) because there is no size limit for the input, we can exploit this program with a buffer overflow, and put the address of the "run" function into the EIP register to execute it
-3) open the binary with gdb-peda (Python Exploit Development Assistance for GDB)
-4) type "pattern create 100" (you can replace 100 by any large number) and copy the value you get
-5) run the binary and put the pattern in the "gets" function input, copy the hex EIP register value
-6) type "pattern offset <eip-value>" with the hex EIP register value
-7) here we see 76 so that confirm the offset we need to overwrite EIP is 76 bytes
-8) we type in gdb "info address run" to get the address of the "run" function
-9) we get 0x8048444 but we have to reverse it to conform to the little endian bytes order of x86 processors and send it as a shell escaped sequence of hexadecimal values
-10) so the exploit input is 76 bytes of random data then the "run" address in little endian order escaped sequence, we send that with "echo -e" to enable interpretation of backslash escapes and inside parentheses so we can group commands, because we have to add a cat command so the shell obtained stays open :
+the program create a buffer of 76 bytes on the stack then put an input from the user inside it, we also see a "run" function that launches a system command with a shell
+because there is no size limit for the input, we can exploit this program with a buffer overflow, and put the address of the "run" function into the EIP register to execute it
+we type in gdb "info address run" to get the address of the "run" function
+we get 0x08048444 but we have to reverse it to conform to the little endian bytes order of x86 processors and send it as a shell escaped sequence of hexadecimal values
+so the exploit input is 76 bytes of random data then the "run" address in little endian order escaped sequence, we send that with "python -c" to enable interpretation of backslash escapes and inside parentheses so we can group commands, because we have to add a cat command so the shell obtained stays open :
 (python -c 'print "A" * 76 + "\x44\x84\x04\x08"' ; cat) | ./level1
-11) because the executable is setuid by level2, when we get the shell we can navigate to level2 home and open the .pass file
+because the executable is setuid by level2, when we get the shell we can navigate to level2 home and open the .pass file
