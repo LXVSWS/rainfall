@@ -1,5 +1,5 @@
 As we can see on the source code, there is a system call for /bin/sh
-we see that each time we put "auth " or "service" 10 bits of data is added to one of those two global variables by the program
-we also see that when we type "login", the program check if some data is present at the auth variable address location + 8 bytes
+we see that each time we put "auth " or "service" data is added to one of those two global variables by the program
+we also see that when we type "login", the program check if some data is present in the memory after the auth variable address location
 so we just have to type one time "auth " to initialize the auth variable and two times "service" to write some data at the desired address in memory
 then "login" to get access to the shell
